@@ -9,6 +9,8 @@ import com.example.demo.utility.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -17,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +30,8 @@ public class DailySummaryServiceIml implements DailySummaryService {
     private final ModelMapper mapper;
     private final DailySummaryRepository summaryRepository;
 
-    @Override
-    public void fetchAndPopulateDailySummary() {
+
+    public void populateDailySummary() {
         try {
             String url = "https://corona-api.cramstack.com/api/v1/daily-summery";
             // create headers
@@ -44,6 +47,11 @@ public class DailySummaryServiceIml implements DailySummaryService {
         } catch (RestClientException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public Page<DailySummary> fetchDailySummary(Date startDate, Date endDate, int page, int size) {
+        return summaryRepository.findAllByDateBetween(startDate, endDate, PageRequest.of(page,size));
     }
 
     public void insertData(List<DailySummaryDto> summaryList){
