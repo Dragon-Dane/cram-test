@@ -27,6 +27,11 @@ public class CramstackController  {
         summaryService.populateDailySummary();
     }
 
+    @GetMapping("district/populate")
+    public void districtDatePopulate() {
+        summaryService.populateDistrictSummary();
+    }
+
     @GetMapping("summary/fetch")
     public Page<DailySummary> fetchSummary(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size, @RequestParam(value = "fromDate", required = false) String fdate, @RequestParam(value = "toDate", required = false) String tdate) throws ParseException {
         Date endDate = new Date();

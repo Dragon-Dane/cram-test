@@ -37,4 +37,6 @@ public class DailySummaryDto {
     @JsonProperty( "Total_Tests_for_COVID19_")
     private int totalTestsForCovid19;
 
+
+
 }
