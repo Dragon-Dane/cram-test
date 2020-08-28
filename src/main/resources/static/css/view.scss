@@ -1,0 +1,253 @@
+#main_container{
+  background-color: #FFFFFF;
+
+  .top_row{
+    background-color: #F2F2F2;
+    border: none;
+    .label{
+      font-size: 1.0vw;
+      color: #0A0A0A;
+    }
+    .value{
+      font-size: 2vw;
+      font-weight: bold;
+    }
+  }
+
+  #bottom-row{
+    .first-col{
+      .card-body {
+        background-color: #e4F6F6;
+        height: 100%;
+        ._header {
+          color: #FFFFFF !important;
+          background-color: #00a79d !important;
+          font-size: 1.6vw;
+          margin-left: 40px;
+          margin-right: 40px;
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
+        }
+        .content{
+          .card-header{
+            border-bottom: #00a79d solid 2px;
+            text-align: center;
+            color: #00a79d;
+            font-size: 1.2vw;
+            background-color: #e4F6F6;
+            font-weight: bold;
+          }
+          .card-body{
+            text-align: center;
+            color: #000000;
+            font-size: 1.6vw;
+            font-weight: bold;
+          }
+        }
+        .chart_icon{
+          font-size: 2vw;
+          color: orangered;
+        }
+      }
+    }
+
+    .second-col{
+      .card-body {
+        background-color: #FEE8EA;
+        ._header {
+          color: #FFFFFF !important;
+          background-color: #F91F2F !important;
+          font-size: 1.6vw;
+          margin-left: 40px;
+          margin-right: 40px;
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
+        }
+        .content{
+          .card-header{
+            border-bottom: #F91F2F solid 2px;
+            text-align: center;
+            color: #F91F2F;
+            font-size: 1.2vw;
+            background-color: #FEE8EA;
+            font-weight: bold;
+          }
+          .card-body{
+            text-align: center;
+            color: #000000;
+            font-size: 1.6vw;
+            font-weight: bold;
+          }
+        }
+        .chart_icon{
+          font-size: 2vw;
+          color: orangered;
+        }
+      }
+    }
+
+    .third-col{
+      .card-body {
+        background-color: #E7F3DB;
+        ._header {
+          color: #FFFFFF !important;
+          background-color: #86C64E !important;
+          font-size: 1.6vw;
+          margin-left: 40px;
+          margin-right: 40px;
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
+        }
+        .content{
+          .card-header{
+            border-bottom: #86C64E solid 2px;
+            text-align: center;
+            color: #86C64E;
+            font-size: 1.2vw;
+            background-color: #E7F3DB;
+            font-weight: bold;
+          }
+          .card-body{
+            text-align: center;
+            color: #000000;
+            font-size: 1.6vw;
+            font-weight: bold;
+          }
+        }
+        .chart_icon{
+          font-size: 2vw;
+          color: orangered;
+        }
+      }
+    }
+
+    .fourth-col{
+      .card-body {
+        background-color: #D1EDF8;
+        ._header {
+          color: #FFFFFF !important;
+          background-color: #00AADE !important;
+          font-size: 1.6vw;
+          margin-left: 40px;
+          margin-right: 40px;
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
+        }
+        .content{
+          .card-header{
+            border-bottom: #00AADE solid 2px;
+            text-align: center;
+            color: #00AADE;
+            font-size: 1.2vw;
+            background-color: #D1EDF8;
+            font-weight: bold;
+          }
+          .card-body{
+            text-align: center;
+            color: #000000;
+            font-size: 1.6vw;
+            font-weight: bold;
+          }
+        }
+        .chart_icon{
+          font-size: 2vw;
+          color: orangered;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 700px) {
+    .top_row{
+      margin-bottom: 15px;
+      .label{
+        font-size: 14px;
+      }
+      .value{
+        font-size: 20px;
+      }
+    }
+
+    #bottom-row{
+      .first-col{
+        margin-bottom: 15px;
+        .card-body {
+          ._header {
+            font-size: 20px;
+          }
+          .content{
+            .card-header{
+              font-size: 14px;
+            }
+            .card-body{
+              font-size: 20px;
+            }
+          }
+          .chart_icon{
+            font-size: 20px;
+          }
+        }
+      }
+
+      .second-col{
+        margin-bottom: 15px;
+        .card-body {
+          ._header {
+            font-size: 20px;
+          }
+          .content{
+            .card-header{
+              font-size: 14px;
+            }
+            .card-body{
+              font-size: 20px;
+            }
+          }
+          .chart_icon{
+            font-size: 20px;
+          }
+        }
+      }
+
+      .third-col{
+        margin-bottom: 15px;
+        .card-body {
+          ._header {
+            font-size: 20px;
+          }
+          .content{
+            .card-header{
+              font-size: 14px;
+            }
+            .card-body{
+              font-size: 20px;
+            }
+          }
+          .chart_icon{
+            font-size: 20px;
+          }
+        }
+      }
+
+      .fourth-col{
+        margin-bottom: 15px;
+        .card-body {
+          ._header {
+            font-size: 20px;
+          }
+          .content{
+            .card-header{
+              font-size: 14px;
+            }
+            .card-body{
+              font-size: 20px;
+            }
+          }
+          .chart_icon{
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+}
