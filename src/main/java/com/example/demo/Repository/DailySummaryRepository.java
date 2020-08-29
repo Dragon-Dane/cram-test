@@ -17,4 +17,7 @@ public interface DailySummaryRepository extends JpaRepository<DailySummary, Date
 
     @Query("select s from daily_summary s where s.iDate between :sDate  and :eDate")
     Page<DailySummary> findAllByDateBetween(@Param("sDate") Date startDate, @Param("eDate") Date endDate, Pageable pageable);
+
+    @Query("select s from daily_summary s where s.iDate = :sDate")
+    DailySummary findByDate(@Param("sDate") Date startDate);
 }

@@ -30,75 +30,8 @@ public class CramstackController  {
     private final DailySummaryService summaryService;
 
     @GetMapping("summary/image")
-    public ResponseEntity<byte[]> summaryImage(@RequestParam) throws IOException {
-
-
-        String html = MessageFormat.format("<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "    <style>\n" +
-                "        table '{'\n" +
-                "            font-family: arial, sans-serif;\n" +
-                "            border-collapse: collapse;\n" +
-                "            width: 100%;\n" +
-                "        '}'\n" +
-                "\n" +
-                "        td, th '{'\n" +
-                "            border: 1px solid #dddddd;\n" +
-                "            text-align: left;\n" +
-                "            padding: 8px;\n" +
-                "        '}'\n" +
-                "\n" +
-                "        tr:nth-child(even) '{'\n" +
-                "            background-color: #dddddd;\n" +
-                "       ' }'\n" +
-                "    </style>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "\n" +
-                "<h2>COVID-19 Summary</h2>\n" +
-                "\n" +
-                "<table>\n" +
-                "    <tr>\n" +
-                "        <th>#</th>\n" +
-                "        <th>Last 24 Hour</th>\n" +
-                "        <th>Total</th>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td>New Case</td>\n" +
-                "        <td>{0}</td>\n" +
-                "        <td>{1}</td>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td>Death Case</td>\n" +
-                "        <td>{0}</td>\n" +
-                "        <td>{1}</td>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td>Recovery</td>\n" +
-                "        <td>{0}</td>\n" +
-                "        <td>{1}</td>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td>Test for COVID</td>\n" +
-                "        <td>{0}</td>\n" +
-                "        <td>{1}</td>\n" +
-                "    </tr>\n" +
-                "</table>\n" +
-                "\n" +
-                "</body>\n" +
-                "</html>\n", 25, "30" );
-        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
-        File img = new File("hello.png");
-        img.createNewFile();
-         imageGenerator.loadHtml(html);
-        try {
-          imageGenerator.getBufferedImage();
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-         imageGenerator.saveAsImage(img);
+    public ResponseEntity<byte[]> summaryImage(@RequestParam(value = "date", defaultValue = "",required = false) String date) throws IOException, ParseException {
+        File img =  summaryService.fetchSummaryByDate(date);
         return ResponseEntity.ok().contentType(MediaType.valueOf(FileTypeMap.getDefaultFileTypeMap().getContentType(img))).body(Files.readAllBytes(img.toPath()));
     }
 

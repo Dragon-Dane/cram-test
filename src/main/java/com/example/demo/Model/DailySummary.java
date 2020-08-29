@@ -16,30 +16,30 @@ public class DailySummary {
     private Date iDate;
 
     @Column(name = "Confirmed_Cases_in_Last_24_Hour")
-    private int confirmedCase;
+    private int confirmedCase =0;
 
     @Column(name = "Death_in_Last_24_Hour")
-    private int death;
+    private int death = 0;
 
     @Column(name = "Recovery_in_Last_24_Hour")
-    private int recovery;
+    private int recovery=0;
 
     @Column(name = "Cumulative_Confirmed_Cases")
-    private int cumulativeConfirmedCases;
+    private int cumulativeConfirmedCases=0;
 
     @Column(name = "Cumulative_Death")
-    private int cumulativeDeath;
+    private int cumulativeDeath=0;
 
     @Column(name = "Cumulative_Recovery")
-    private int cumulativeRecovery;
+    private int cumulativeRecovery=0;
 
     @Column(name = "Daily_Tests_for_COVID19_")
-    private int dailyTestsForCovid19;
+    private int dailyTestsForCovid19 =0;
 
     @Column(name = "Confirmed_new_cases_per_day")
-    private int confirmedNewCasesPerDay;
+    private int confirmedNewCasesPerDay=0;
 
     @Column(name = "Total_Tests_for_COVID19_")
-    private int totalTestsForCovid19;
+    private int totalTestsForCovid19=0;
 
 }
