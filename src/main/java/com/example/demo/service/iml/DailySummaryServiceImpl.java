@@ -11,6 +11,8 @@ import com.example.demo.Repository.DistrictRepository;
 import com.example.demo.Repository.DistrictSummaryRepository;
 import com.example.demo.service.DailySummaryService;
 import com.example.demo.utility.DateUtil;
+import com.weddini.throttling.Throttling;
+import com.weddini.throttling.ThrottlingType;
 import gui.ava.html.image.generator.HtmlImageGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -31,10 +33,11 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class DailySummaryServiceImpl implements DailySummaryService {
 
     private final ModelMapper mapper;
@@ -87,6 +90,7 @@ public class DailySummaryServiceImpl implements DailySummaryService {
     }
 
     @Override
+    @Throttling(type = ThrottlingType.RemoteAddr, limit = 10 ,timeUnit = TimeUnit.DAYS)
     public File fetchDistrictSummary(int bbsCode) throws IOException {
         District district = districtRepository.findByBbsCode(bbsCode);
         if(district == null) throw new EntityNotFoundException("No District Found with BBS Code: "+ bbsCode);
@@ -95,6 +99,7 @@ public class DailySummaryServiceImpl implements DailySummaryService {
     }
 
     @Override
+    @Throttling(type = ThrottlingType.RemoteAddr, limit = 5 ,timeUnit = TimeUnit.SECONDS)
     public File fetchSummaryByDate(String input) throws IOException, ParseException {
         Date date;
         if (input.equals(""))  date = new Date();

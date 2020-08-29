@@ -24,7 +24,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1")
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CramstackController  {
 
     private final DailySummaryService summaryService;
