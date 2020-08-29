@@ -1,19 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 <body>
 
+<h2>COVID-19 Summary</h2>
 
-<h1 style="background-color:Tomato;">Tomato</h1>
-<h1 style="background-color:Orange;">Orange</h1>
-<h1 style="background-color:DodgerBlue;">DodgerBlue</h1>
-<h1 style="background-color:MediumSeaGreen;">MediumSeaGreen</h1>
-<h1 style="background-color:Gray;">Gray</h1>
-<h1 style="background-color:SlateBlue;">SlateBlue</h1>
-<h1 style="background-color:Violet;">Violet</h1>
-<h1 style="background-color:LightGray;">LightGray</h1>
+<table>
+    <tr>
+        <th>#</th>
+        <th>Last 24 Hour</th>
+        <th>Total</th>
+    </tr>
+    <tr>
+        <td>New Case</td>
+        <td>{0}</td>
+        <td>{1}</td>
+    </tr>
+    <tr>
+        <td>Death Case</td>
+        <td>{0}</td>
+        <td>{1}</td>
+    </tr>
+    <tr>
+        <td>Recovery</td>
+        <td>{0}</td>
+        <td>{1}</td>
+    </tr>
+    <tr>
+        <td>Test for COVID</td>
+        <td>{0}</td>
+        <td>{1}</td>
+    </tr>
+</table>
+
 </body>
 </html>

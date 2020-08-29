@@ -17,6 +17,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -28,34 +29,72 @@ public class CramstackController  {
 
     private final DailySummaryService summaryService;
 
-    @GetMapping("test")
-    public ResponseEntity<byte[]> test() throws IOException {
+    @GetMapping("summary/image")
+    public ResponseEntity<byte[]> summaryImage(@RequestParam) throws IOException {
+
+
+        String html = MessageFormat.format("<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <style>\n" +
+                "        table '{'\n" +
+                "            font-family: arial, sans-serif;\n" +
+                "            border-collapse: collapse;\n" +
+                "            width: 100%;\n" +
+                "        '}'\n" +
+                "\n" +
+                "        td, th '{'\n" +
+                "            border: 1px solid #dddddd;\n" +
+                "            text-align: left;\n" +
+                "            padding: 8px;\n" +
+                "        '}'\n" +
+                "\n" +
+                "        tr:nth-child(even) '{'\n" +
+                "            background-color: #dddddd;\n" +
+                "       ' }'\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "\n" +
+                "<h2>COVID-19 Summary</h2>\n" +
+                "\n" +
+                "<table>\n" +
+                "    <tr>\n" +
+                "        <th>#</th>\n" +
+                "        <th>Last 24 Hour</th>\n" +
+                "        <th>Total</th>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td>New Case</td>\n" +
+                "        <td>{0}</td>\n" +
+                "        <td>{1}</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td>Death Case</td>\n" +
+                "        <td>{0}</td>\n" +
+                "        <td>{1}</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td>Recovery</td>\n" +
+                "        <td>{0}</td>\n" +
+                "        <td>{1}</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "        <td>Test for COVID</td>\n" +
+                "        <td>{0}</td>\n" +
+                "        <td>{1}</td>\n" +
+                "    </tr>\n" +
+                "</table>\n" +
+                "\n" +
+                "</body>\n" +
+                "</html>\n", 25, "30" );
         HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
         File img = new File("hello.png");
         img.createNewFile();
-         imageGenerator.loadHtml("<!DOCTYPE html>\n" +
-                 "<html>\n" +
-                 "<head>\n" +
-                 "    <meta charset=\"UTF-8\">\n" +
-                 "    <title>Title</title>\n" +
-                 "</head>\n" +
-                 "<body>\n" +
-                 "\n" +
-                 "\n" +
-                 "<h1 style=\"background-color:Blue;\">Tomato</h1>\n" +
-                 "<h1 style=\"background-color:Blue;\">Orange</h1>\n" +
-                 "<h1 style=\"background-color:Blue;\">DodgerBlue</h1>\n" +
-                 "<h1 style=\"background-color:Blue;\">MediumSeaGreen</h1>\n" +
-                 "<h1 style=\"background-color:Blue;\">Gray</h1>\n" +
-                 "<h1 style=\"background-color:Blue;\">SlateBlue</h1>\n" +
-                 "<h1 style=\"background-color:Blue;\">Violet</h1>\n" +
-                 "<h1 style=\"background-color:Blue;\">LightGray</h1>\n" +
-                 "</body>\n" +
-                 "</html>");
-         imageGenerator.setSize(new Dimension(6000,6000));
+         imageGenerator.loadHtml(html);
         try {
           imageGenerator.getBufferedImage();
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
