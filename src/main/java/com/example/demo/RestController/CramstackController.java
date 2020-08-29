@@ -1,6 +1,7 @@
 package com.example.demo.RestController;
 
 import com.example.demo.Model.DailySummary;
+import com.example.demo.Model.DistrictSummary;
 import com.example.demo.service.DailySummaryService;
 import com.example.demo.utility.DateUtil;
 import gui.ava.html.image.generator.HtmlImageGenerator;
@@ -9,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.activation.FileTypeMap;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,30 +32,33 @@ public class CramstackController  {
     public ResponseEntity<byte[]> test() throws IOException {
         HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
         File img = new File("hello.png");
+        img.createNewFile();
          imageGenerator.loadHtml("<!DOCTYPE html>\n" +
-                 "<html lang=\"en\">\n" +
+                 "<html>\n" +
                  "<head>\n" +
                  "    <meta charset=\"UTF-8\">\n" +
                  "    <title>Title</title>\n" +
                  "</head>\n" +
                  "<body>\n" +
-                 "<!DOCTYPE html>\n" +
-                 "<html>\n" +
-                 "<body>\n" +
                  "\n" +
-                 "<h1 style=\"background-color:Tomato;\">Tomato</h1>\n" +
-                 "<h1 style=\"background-color:Orange;\">Orange</h1>\n" +
-                 "<h1 style=\"background-color:DodgerBlue;\">DodgerBlue</h1>\n" +
-                 "<h1 style=\"background-color:MediumSeaGreen;\">MediumSeaGreen</h1>\n" +
-                 "<h1 style=\"background-color:Gray;\">Gray</h1>\n" +
-                 "<h1 style=\"background-color:SlateBlue;\">SlateBlue</h1>\n" +
-                 "<h1 style=\"background-color:Violet;\">Violet</h1>\n" +
-                 "<h1 style=\"background-color:LightGray;\">LightGray</h1>\n" +
                  "\n" +
-                 "</body>\n" +
-                 "</html>\n" +
+                 "<h1 style=\"background-color:Blue;\">Tomato</h1>\n" +
+                 "<h1 style=\"background-color:Blue;\">Orange</h1>\n" +
+                 "<h1 style=\"background-color:Blue;\">DodgerBlue</h1>\n" +
+                 "<h1 style=\"background-color:Blue;\">MediumSeaGreen</h1>\n" +
+                 "<h1 style=\"background-color:Blue;\">Gray</h1>\n" +
+                 "<h1 style=\"background-color:Blue;\">SlateBlue</h1>\n" +
+                 "<h1 style=\"background-color:Blue;\">Violet</h1>\n" +
+                 "<h1 style=\"background-color:Blue;\">LightGray</h1>\n" +
                  "</body>\n" +
                  "</html>");
+         imageGenerator.setSize(new Dimension(6000,6000));
+        try {
+          imageGenerator.getBufferedImage();
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
          imageGenerator.saveAsImage(img);
         return ResponseEntity.ok().contentType(MediaType.valueOf(FileTypeMap.getDefaultFileTypeMap().getContentType(img))).body(Files.readAllBytes(img.toPath()));
     }
@@ -79,4 +81,11 @@ public class CramstackController  {
         if(tdate != null) endDate = DateUtil.toDateWithOutZone(tdate);
         return summaryService.fetchDailySummary(startDate,endDate,page, size);
     }
+
+    @GetMapping("summary/district/{bbsCode}")
+    public DistrictSummary fetchSummary(@PathVariable("bbsCode")int bbsCode ) {
+        return summaryService.fetchDistrictSummary(bbsCode);
+    }
+
+
 }

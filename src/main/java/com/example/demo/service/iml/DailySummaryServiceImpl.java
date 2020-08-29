@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.EntityNotFoundException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
@@ -80,6 +81,13 @@ public class DailySummaryServiceImpl implements DailySummaryService {
     @Override
     public Page<DailySummary> fetchDailySummary(Date startDate, Date endDate, int page, int size) {
         return summaryRepository.findAllByDateBetween(startDate, endDate, PageRequest.of(page,size));
+    }
+
+    @Override
+    public DistrictSummary fetchDistrictSummary(int bbsCode) {
+        District district = districtRepository.findByBbsCode(bbsCode);
+        if(district == null) throw new EntityNotFoundException("No District Found with BBS Code: "+ bbsCode);
+        return districtSummaryRepository.findByDistrictId(district.getId());
     }
 
     public void insertData(List<DailySummaryDto> summaryList){

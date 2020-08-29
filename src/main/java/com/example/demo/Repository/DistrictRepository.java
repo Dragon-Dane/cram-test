@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DistrictRepository extends JpaRepository<District, Long> {
     District findByNameEnOrNameBn(String nameEn,String nameBn);
+
+    District findByBbsCode(int bbsCode);
 }
