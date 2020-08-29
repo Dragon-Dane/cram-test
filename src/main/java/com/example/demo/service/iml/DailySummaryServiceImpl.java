@@ -13,6 +13,7 @@ import com.example.demo.service.DailySummaryService;
 import com.example.demo.utility.DateUtil;
 import gui.ava.html.image.generator.HtmlImageGenerator;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -86,10 +87,11 @@ public class DailySummaryServiceImpl implements DailySummaryService {
     }
 
     @Override
-    public DistrictSummary fetchDistrictSummary(int bbsCode) {
+    public File fetchDistrictSummary(int bbsCode) throws IOException {
         District district = districtRepository.findByBbsCode(bbsCode);
         if(district == null) throw new EntityNotFoundException("No District Found with BBS Code: "+ bbsCode);
-        return districtSummaryRepository.findByDistrictId(district.getId());
+        DistrictSummary summary =  districtSummaryRepository.findByDistrictId(district.getId());
+        return generateDistrictSummaryImage(summary, district);
     }
 
     @Override
@@ -98,8 +100,8 @@ public class DailySummaryServiceImpl implements DailySummaryService {
         if (input.equals(""))  date = new Date();
         else date = DateUtil.toDateWithOutZone(input);
         DailySummary dailySummary = summaryRepository.findByDate(date);
-        if(dailySummary == null) return  generateImage(new DailySummary());
-        return generateImage(dailySummary);
+        if(dailySummary == null) return  generateDailySummaryImage(new DailySummary());
+        return generateDailySummaryImage(dailySummary);
     }
 
     private void insertData(List<DailySummaryDto> summaryList){
@@ -127,7 +129,7 @@ public class DailySummaryServiceImpl implements DailySummaryService {
 
     }
 
-    private File generateImage( DailySummary dailySummary) throws IOException {
+    private File generateDailySummaryImage( DailySummary dailySummary) throws IOException {
         String html = MessageFormat.format("<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -187,6 +189,70 @@ public class DailySummaryServiceImpl implements DailySummaryService {
                 dailySummary.getDeath(), dailySummary.getCumulativeDeath(),
                 dailySummary.getRecovery(), dailySummary.getCumulativeRecovery(),
                 dailySummary.getDailyTestsForCovid19(),dailySummary.getTotalTestsForCovid19());
+        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
+        File img = new File("summary.png");
+        img.createNewFile();
+        imageGenerator.loadHtml(html);
+        try {
+            imageGenerator.getBufferedImage();
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        imageGenerator.saveAsImage(img);
+        return img;
+    }
+
+    private File generateDistrictSummaryImage( DistrictSummary summary, District district) throws IOException {
+        String html = MessageFormat.format("<!DOCTYPE html>\n" +
+                        "<html>\n" +
+                        "<head>\n" +
+                        "    <style>\n" +
+                        "        table '{'\n" +
+                        "            font-family: arial, sans-serif;\n" +
+                        "            border-collapse: collapse;\n" +
+                        "            width: 100%;\n" +
+                        "        '}'\n" +
+                        "\n" +
+                        "        td, th '{'\n" +
+                        "            border: 1px solid #dddddd;\n" +
+                        "            text-align: left;\n" +
+                        "            padding: 8px;\n" +
+                        "        '}'\n" +
+                        "\n" +
+                        "        tr:nth-child(even) '{'\n" +
+                        "            background-color: #dddddd;\n" +
+                        "       ' }'\n" +
+                        "    </style>\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "\n" +
+                        "<h2>COVID-19 District Summary</h2>\n" +
+                        "\n" +
+                        "<table>\n" +
+                        "    <tr>\n" +
+                        "        <th>{0}</th>\n" +
+                        "        <th>{1}</th>\n" +
+                        "    </tr>\n" +
+                        "    <tr>\n" +
+                        "        <td>Total Case</td>\n" +
+                        "        <td>{2}</td>\n" +
+                        "\n" +
+                        "    </tr>\n" +
+                        "    <tr>\n" +
+                        "        <td>Total Deaths</td>\n" +
+                        "        <td>{3}</td>\n" +
+                        "\n" +
+                        "    </tr>\n" +
+                        "    <tr>\n" +
+                        "        <td>Total Recovery</td>\n" +
+                        "        <td>{4}</td>\n" +
+                        "    </tr>\n" +
+                        "</table>\n" +
+                        "</body>\n" +
+                        "</html>",
+                district.getNameEn(), summary.getLatLon(),
+                summary.getCases(), summary.getDeath(), summary.getRecovery());
         HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
         File img = new File("summary.png");
         img.createNewFile();

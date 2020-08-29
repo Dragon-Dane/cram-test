@@ -55,8 +55,10 @@ public class CramstackController  {
     }
 
     @GetMapping("summary/district/{bbsCode}")
-    public DistrictSummary fetchSummary(@PathVariable("bbsCode")int bbsCode ) {
-        return summaryService.fetchDistrictSummary(bbsCode);
+    public ResponseEntity<byte[]> fetchSummary(@PathVariable("bbsCode")int bbsCode ) throws IOException {
+        File img =  summaryService.fetchDistrictSummary(bbsCode);
+        return ResponseEntity.ok().contentType(MediaType.valueOf(FileTypeMap.getDefaultFileTypeMap().getContentType(img))).body(Files.readAllBytes(img.toPath()));
+
     }
 
 
