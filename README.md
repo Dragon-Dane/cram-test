@@ -16,6 +16,7 @@ mvn spring-boot:run
 ```
 ## Rest API Endpoints
 
+###Task 1.1 and 2.1: Scheduled to crawl data every 8 hours interval 
 ###Task 1.2: 
 Returns an image 
 ```shell
@@ -24,8 +25,9 @@ http://localhost:8080/api/v1/summary/image
 
 ###Task 1.3: 
 Returns List of summary object with pagination
+RequestParam: fromDate, toDate, format: yyyy-mm-dd 
 ```shell
-localhost:8080/api/v1/summary/fetch?fromDate=2020-08-10&ToDate=2020-08-14
+localhost:8080/api/v1/summary/fetch?fromDate=2020-08-10&toDate=2020-08-14
 ```
 
 ###Task 2.2:  
@@ -33,3 +35,8 @@ Returns an image
 ```shell
 http://localhost:8080/api/v1/summary/district/{bbsCode}
 ```
+
+### Bonus Task:
+Added rate limiter. 
+On  Task 1.2: Allow 5 request per min.
+On Task 2.2 : Allow 100 requests per day. 
